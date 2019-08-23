@@ -9,6 +9,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel
+        BorderBrush="Gray"
+        BorderThickness="1"
+        CornerRadius="5"
         x:Name="Container"
         Orientation="Vertical" 
         Width="600" 

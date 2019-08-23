@@ -39,7 +39,7 @@ namespace GridComponent
             this.GridLength = this.Container.Width / MAX;
             this.Bundle = new List<List<Grid>>();
 
-            this.InitGrid(23);
+            this.InitGrid(28);
         }
 
         /// <summary>
@@ -53,6 +53,20 @@ namespace GridComponent
             {
                 this.AddNewGrid();
             }
+
+            // re-arrange border for the last row
+            var LastRow = this.Bundle.Last();
+            LastRow.Last().BorderThickness = new Thickness(0, 0, 1, 0);
+            LastRow.First().BorderThickness = new Thickness(0, 0, 1, 0);
+            var index = 0;
+            foreach(var item in LastRow)
+            {
+                if (index > 0 && index < LastRow.Count - 1)
+                {
+                    item.BorderThickness = new Thickness(0, 0, 1, 0);
+                }
+                index++;
+            }
         }
 
         /// <summary>
@@ -64,15 +78,6 @@ namespace GridComponent
             Grid grid = new Grid();
             grid.Width = this.GridLength;
             grid.Height = this.GridLength;
-
-            // remove duplicate border
-            if (this.Container.Children.Count > 1)
-            {
-                grid.BorderThickness = new Thickness(1, 0, 1, 1);
-            } else
-            {
-                grid.BorderThickness = new Thickness(1, 1, 1, 1);
-            }
 
             grid.BorderBrush = new SolidColorBrush(Colors.Gray);
             return grid;
@@ -95,13 +100,8 @@ namespace GridComponent
             // add border right to the grid everytime we add new gird
             if (LastGrid.Count > 1)
             {
-                if (this.Bundle.Count > 1)
-                {
-                    LastGrid.Last().BorderThickness = new Thickness(0, 0, 1, 1);
-                } else
-                {
-                    LastGrid.Last().BorderThickness = new Thickness(0, 1, 1, 1);
-                }
+                LastGrid.First().BorderThickness = new Thickness(0, 0, 1, 1);
+                LastGrid.Last().BorderThickness = new Thickness(0, 0, 1, 1);
             }
 
             this.CurrentRow.Children.Add(grid);
